@@ -1,4 +1,4 @@
-const  { Block, Transaction }  = require("../blockchain");
+const  { Block, Transaction, Blockchain }  = require("../blockchain");
 const SHA256 = require('crypto-js/sha256');
 
 describe("Block", () => {
@@ -27,5 +27,12 @@ describe("Block", () => {
     const { previousHash, timestamp, transactions, nonce } = testBlock;
     const expected = SHA256(previousHash + timestamp + JSON.stringify(transactions) + nonce).toString();
     expect(testBlock.hash).toBe(expected);
+  })
+})
+
+describe("Blockchain", () => {
+  test("when a new blockchain is created, the chain is the genesisblock", () => {
+    const testBlockchain = new Blockchain;
+    expect(testBlockchain.chain).toEqual([new Block(null, "0")])
   })
 })
